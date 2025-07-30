@@ -9,10 +9,23 @@ class Ball:
         self.radius = radius
         self.speed_x = speed_x
         self.speed_y = speed_y
+        self.z = 0              # height above the ground
+        self.z_speed = 0        # vertical velocity
+        self.gravity = 0.5      # how quickly the ball falls
+
 
     def move(self):
         self.x += self.speed_x
         self.y += self.speed_y
+
+        # Update height (z-axis)
+        self.z += self.z_speed
+        self.z_speed -= self.gravity  # gravity pulls it down
+
+        # Bounce when it hits the ground (z=0)
+        if self.z < 0:
+            self.z = 0
+            self.z_speed *= -0.6  # simulate bounce with energy loss
 
         # Bounce off left and right walls
         if self.x - self.radius <= 0 or self.x + self.radius >= 640:
@@ -41,4 +54,12 @@ class Ball:
 
 
     def draw(self, screen):
-        pygame.draw.circle(screen, (255, 255, 255), (int(self.x), int(self.y)), self.radius)
+        # Shadow (fixed y position on court)
+        shadow_color = (0, 0, 0)
+        pygame.draw.ellipse(screen, shadow_color,
+            (int(self.x - self.radius), int(self.y + 8), self.radius * 2, 6))
+
+        # Ball itself — shrink size based on height
+        scale = max(0.5, 1 - self.z / 100)
+        ball_radius = int(self.radius * scale)
+        pygame.draw.circle(screen, (255, 255, 255), (int(self.x), int(self.y)), ball_radius)

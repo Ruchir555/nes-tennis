@@ -51,6 +51,13 @@ def main():
             elif event.type == pygame.KEYDOWN:
                 if ball_held and event.key == pygame.K_SPACE:
                     ball_held = False  # Launch the ball!
+                    # Flat or lob depending on modifier key:
+                    if keys[pygame.K_LSHIFT] or keys[pygame.K_RSHIFT]:
+                        ball.z = 0
+                        ball.z_speed = 10  # Lob
+                    else:
+                        ball.z = 0
+                        ball.z_speed = 3   # Flat serve
 
         keys = pygame.key.get_pressed()
         paddle.move(keys)
@@ -100,8 +107,9 @@ def main():
         if ball_held:
             font = pygame.font.SysFont("Courier", 24)
             label = font.render("Press SPACE to Serve", True, (255, 255, 255))
+            label2 = font.render("SHIFT + SPACE to Lob Serve", True, (255, 255, 255))
             screen.blit(label, (SCREEN_WIDTH // 2 - label.get_width() // 2, SCREEN_HEIGHT // 2))
-
+            screen.blit(label2, (SCREEN_WIDTH // 2 - label2.get_width() // 2, SCREEN_HEIGHT // 2 + label2.get_width() // 5))
 
 
         pygame.display.flip()
