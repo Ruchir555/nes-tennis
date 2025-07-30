@@ -69,6 +69,12 @@ def main():
         else:
             ball.move()
 
+        if ball.bounce_count > 1:
+            # Award point to opponent of last hitter (simplified for now)
+            score.point_to_cpu()  # or .point_to_player() depending on last hit logic
+            ball = Ball(x=SCREEN_WIDTH//2, y=SCREEN_HEIGHT//2, radius=8, speed_x=BALL_SPEED_X, speed_y=BALL_SPEED_Y)
+            ball_held = True
+
 
          # Basic CPU AI: move toward the ball's x-position
         if not ball_held:
