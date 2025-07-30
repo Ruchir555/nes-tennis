@@ -18,26 +18,27 @@ class Ball:
         if self.x - self.radius <= 0 or self.x + self.radius >= 640:
             self.speed_x *= -1
 
-        # Bounce off top
-        if self.y - self.radius <= 0:
-            self.speed_y *= -1
+        # # Bounce off top        # this is the standard pong variation, remove if you are playing against a CPU
+        # if self.y - self.radius <= 0:
+        #     self.speed_y *= -1
+
 
     def check_collision(self, paddle_rect):
         ball_rect = pygame.Rect(self.x - self.radius, self.y - self.radius,
                                 self.radius * 2, self.radius * 2)
-        # if ball_rect.colliderect(paddle_rect):
-        #     self.speed_y *= -1
-        #     self.y = paddle_rect.top - self.radius  # Prevent sticking
 
         if ball_rect.colliderect(paddle_rect):
+            # Only bounce if the ball is moving toward the paddle
             if self.speed_y > 0 and self.y < paddle_rect.centery:
-                # Ball is moving down, must be player paddle
+                # Ball is moving down (player paddle)
                 self.speed_y *= -1
                 self.y = paddle_rect.top - self.radius
+
             elif self.speed_y < 0 and self.y > paddle_rect.centery:
-                # Ball is moving up, must be CPU paddle
+                # Ball is moving up (CPU paddle)
                 self.speed_y *= -1
                 self.y = paddle_rect.bottom + self.radius
+
 
     def draw(self, screen):
         pygame.draw.circle(screen, (255, 255, 255), (int(self.x), int(self.y)), self.radius)

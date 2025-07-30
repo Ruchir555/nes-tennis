@@ -75,19 +75,21 @@ def main():
 
         # CPU misses → point to player
         if ball.y + ball.radius < 0:
+            print("Player scores!")
             score.point_to_player()
             ball = Ball(x=SCREEN_WIDTH//2, y=SCREEN_HEIGHT//2, radius=8, speed_x=BALL_SPEED_X, speed_y=BALL_SPEED_Y)
             ball_held = True
 
         # Player misses → point to CPU
         elif ball.y - ball.radius > SCREEN_HEIGHT:
+            print("CPU scores!")
             score.point_to_cpu()
             ball = Ball(x=SCREEN_WIDTH//2, y=SCREEN_HEIGHT//2, radius=8, speed_x=BALL_SPEED_X, speed_y=BALL_SPEED_Y)
             ball_held = True
-
-        # Then: check collisions
-        ball.check_collision(paddle.rect)
-        ball.check_collision(cpu.rect)
+        else:
+            # Then: check collisions
+            ball.check_collision(paddle.rect)
+            ball.check_collision(cpu.rect)
 
         screen.fill((0, 128, 0))  # Court background
         draw_net(screen)          # Center net
