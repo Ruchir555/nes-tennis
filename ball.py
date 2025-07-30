@@ -37,8 +37,14 @@ class Ball:
 
         # Net collision — only if ball is too low and crossing mid-court
         net_y = SCREEN_HEIGHT // 2
-        if abs(self.y - net_y) < 5 and self.z < 5:
-            self.speed_y *= -1  # bounce back
+        # if abs(self.y - net_y) < 5 and self.z < 5:
+        if self.z < 5 and (self.y - self.speed_y < net_y <= self.y):
+            # Ball is crossing net from below and is too low
+            # self.speed_y *= -1   #bounce back
+            self.speed_y = 0
+            self.speed_x = 0
+            self.z_speed = 0
+            self.bounce_count = 2  # Force scoring
 
 
         # # Bounce off top        # this is the standard pong variation, remove if you are playing against a CPU
