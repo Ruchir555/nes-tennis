@@ -3,7 +3,7 @@ name: Apply prepared repository update
 on:
   push:
     paths:
-      - prepared-change.patch.gz.part-*
+      - prepared-change.patch.gz.part-02
 
 permissions:
   contents: write
