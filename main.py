@@ -45,6 +45,7 @@ def main():
 
     running = True
     while running:
+        keys = pygame.key.get_pressed()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
@@ -59,7 +60,6 @@ def main():
                         ball.z = 0
                         ball.z_speed = 3   # Flat serve
 
-        keys = pygame.key.get_pressed()
         paddle.move(keys)
 
         # BALL MOVEMENT LOGIC:
@@ -120,5 +120,4 @@ def main():
 
 if __name__ == "__main__":
     main()
-
 

@@ -1,6 +1,7 @@
 # player.py
 
 import pygame
+from config import SCREEN_WIDTH
 
 class Player:
     def __init__(self, x, y, width, height, speed):
@@ -14,7 +15,7 @@ class Player:
             self.rect.x += self.speed
 
         # Keep the paddle on screen
-        self.rect.x = max(0, min(self.rect.x, 640 - self.rect.width))
+        self.rect.x = max(0, min(self.rect.x, SCREEN_WIDTH - self.rect.width))
 
     def draw(self, screen):
         pygame.draw.rect(screen, (255, 255, 255), self.rect)
