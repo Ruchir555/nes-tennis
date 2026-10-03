@@ -3,7 +3,7 @@ name: Apply prepared repository update
 on:
   push:
     paths:
-      - prepared-change.patch.gz
+      - prepared-change.patch.gz.part-*
 
 permissions:
   contents: write
@@ -19,9 +19,9 @@ jobs:
       - name: Apply verified local change
         shell: bash
         run: |
-          gzip -dc prepared-change.patch.gz > /tmp/prepared-change.patch
+          cat prepared-change.patch.gz.part-* | gzip -dc > /tmp/prepared-change.patch
           git apply --index --binary /tmp/prepared-change.patch
-          git rm prepared-change.patch.gz
+          git rm prepared-change.patch.gz prepared-change.patch.gz.part-*
           git rm .github/workflows/apply-prepared-change.yml
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
